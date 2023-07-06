@@ -1,0 +1,18 @@
+[Unit]
+Description=The Rhadamanthys server
+After=syslog.target network.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+LimitNOFILE=infinity
+ExecStartPre=/bin/mkdir -p /var/run/server/
+PIDFile=/var/run/server/rhadamanthys.pid
+Environment=PIDFile=/var/run/server/rhadamanthys.pid
+ExecStart=/usr/local/rhadamanthys/bin/rhadamanthys -c /usr/local/rhadamanthys/conf/conf.yaml
+ExecStop=/usr/local/rhadamanthys/bin/rhadamanthys -s stop
+Restart=on-failure
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
